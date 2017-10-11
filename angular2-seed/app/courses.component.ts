@@ -1,4 +1,9 @@
-import {Component} from 'angular2/core';
+import {Component} from 'angular2/core'; //component from angular core services
+
+import {CourseService} from './course.service'; //import CourseService module from CourseService
+import {AuthorComponent} from './authors.component'
+import {AuthorService} from './authors.service'; // this is importing authorservice
+
 
 @Component({
     selector:'courses', //specifies css selector for the host element
@@ -9,9 +14,18 @@ import {Component} from 'angular2/core';
         {{ course }}
         </li>
     </ul>
-    ` //specifes the html that will be inserted into the dom when the html is rendered
+    `, //specifes the html that will be inserted into the dom when the html is rendered
+
+    providers:[CourseService] // specifying the dependancies for the project
 })
+
+
 export class CoursesComponent{
     title: string = "The title of course page";
-    courses = ["Course1", "Course2", "Course3"];
+    courses;
+
+    constructor(courseService: CourseService){ //camel case: pascal case, component and class ( this is a depenancy, dependancy injection)
+        this.courses = courseService.getCourses();
+    }
 }
+
